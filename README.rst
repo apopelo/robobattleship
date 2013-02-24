@@ -25,7 +25,8 @@ Authors
 -------
 
 Original implementation by:
-  Andrey Popelo <andrey@popelo.com>
-  Sergey Lysach <sergikoff88@gmail.com>
 
-Big thanks for idea and help to Sergey Lysach <sergikoff88@gmail.com>
+- Andrey Popelo <andrey@popelo.com>
+- Sergey Lysach <sergikoff88@gmail.com>
+
+Big thanks for idea and help to Sergey Lysach
