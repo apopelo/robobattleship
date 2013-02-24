@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <a href="/" style="position:absolute">&larr; back to main page</a>
+
+  <h1 style="text-align:center">Battle: {{ battle.player1.name }} vs {{ battle.player2.name }}</h1>
+
+  <div id="gameboard"></div>
+
+  <script type="text/javascript">
+    var run = function() {
+        $.get("/gameboard/{{ battle.bid }}", function(response) {
+            if (response.status == "success") {
+                $("#gameboard").html(response.battle.html);
+
+                if (response.battle.active) {
+                    setTimeout(run, 1000);
+                }
+            }
+        });
+    };
+
+    run();
+  </script>
+{% endblock %}

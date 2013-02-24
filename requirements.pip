@@ -1,0 +1,15 @@
+# This file collects all required third-party applications that are needed
+# to run this project. Later you can install all these apps in a row
+# using pip. Example::
+#
+#     pip install -r -u requirements.pip
+
+
+# Libraries used in the project
+# it is *REQUIRED* to add a version for each library
+
+bottle==0.11.6
+gevent==0.13.8
+requests==1.1.0
+jinja2==2.6
+logsna==1.2

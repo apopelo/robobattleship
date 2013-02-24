@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>RoboBattleship Server <small>(<a href="/about/">About</a>)</small></h1>
+  <p>Welcome to RoboBattleship Server &mdash; a simple game server for classic Battleship board game with REST API which allows you to code your own bot players and fight with other bots online.</p>
+
+  <div class="column small">
+    {#
+    <h2>Usefull pages</h2>
+    <ul>
+      <li><a href="/players/">Registered players list</a></li>
+    </ul>
+    #}
+
+    <h2>Registered players</h2>
+    <ul>
+    {% for player in players %}
+      <li>{{ player.name }} ({{ player.uid }})</li>
+    {% else %}
+      <li>--Nobody registered yet--</li>
+    {% endfor %}
+    </ul>
+
+    <h2>Active battles</h2>
+    <ul>
+    {% for battle in battles %}
+      <li><a href="/battle/{{ battle.bid }}">{{ battle.player1.name }} VS {{ battle.player2.name }}</a></li>
+    {% else %}
+      <li>--No active battles--</li>
+    {% endfor %}
+    </ul>
+
+    <h2>Past battles</h2>
+    <ul>
+    {% for battle in archived_battles %}
+      <li><a href="/battle/{{ battle.bid }}">{{ battle.player1.name }} VS {{ battle.player2.name }}</a></li>
+    {% else %}
+      <li>--No past battles--</li>
+    {% endfor %}
+    </ul>
+  </div>
+
+  <div class="column wide">
+    <h2>REST API</h2>
+    <p>We currently have a REST API with the following methods available:</p>
+
+    <h3>GET /register/&lt;name&gt;</h3>
+    <p>Register a player with given &lt;name&gt; on the server.</p>
+    <p>Input parameters:</p>
+    <p>
+      <ul>
+        <li>
+          <strong>name</strong>: your preferred player name
+        </li>
+      </ul>
+    </p>
+    <p>Returns JSON object with keys:</p>
+    <p>
+      <ul>
+        <li>
+          <strong>status</strong>: status of request ('success' or 'fail')
+        </li>
+        <li>
+          <strong>player</strong>: info about registered player:
+          <ul>
+            <li><strong>uid</strong>: unique id of player</li>
+            <li><strong>secret</strong>: a secret key for a particular player (<strong>don't share it with anybody!</strong>)</li>
+            <li><strong>name</strong>: player name</li>
+          </ul>
+        </li>
+      </ul>
+    </p>
+    <p>Example:</p>
+    <pre><code class="http">GET /register/Optimus%20Prime HTTP/1.1
+Host: 127.0.0.1:9999
+Content-Length: 109
+Content-Type: application/json
+
+{"status": "success",
+ "player": {"secret": "usec-3af1a766", "name": "Optimus Prime", "uid": "uid-90405cbc"}}</code>
+    </pre>
+
+    <h3>GET /setships/&lt;uid&gt;/&lt;secret&gt;/&lt;ships&gt;</h3>
+    <p>Set &lt;ships&gt; on a battle field for player with given &lt;uid&gt; and &lt;secret&gt;.</p>
+    <p>Input parameters:</p>
+    <p>
+      <ul>
+        <li>
+          <strong>uid</strong>: your unique id of player
+        </li>
+        <li>
+          <strong>secret</strong>: your secret key of player
+        </li>
+        <li>
+          <strong>ships</strong>: a string, 100 characters, containing '1' and '0' ('1' - ship, '0' - sea)
+        </li>
+      </ul>
+    </p>
+    <p>Returns JSON object with keys:</p>
+    <p>
+      <ul>
+        <li>
+          <strong>status</strong>: status of request ('success' or 'fail')<br/>
+        </li>
+      </ul>
+    </p>
+    <p>Example:</p>
+    <pre><code class="http">GET /setships/uid-f9385874/usec-56b52ece/0001100000000000000000000111100100000000010010000001000100000001010001000101010001000001000000010000 HTTP/1.1
+Host: 127.0.0.1:9999
+Content-Length: 22
+Content-Type: application/json
+
+{"status": "success"}</code>
+    </pre>
+
+    <h3>GET /shoot/&lt;uid&gt;/&lt;secret&gt;/&lt;enemy_uid&gt;/&lt;x&gt;/&lt;y&gt;</h3>
+    <p>Try to hit an enemy ship in position represented by &lt;x&gt; and &lt;y&gt;</p>
+    <p>Input parameters:</p>
+    <p>
+      <ul>
+        <li>
+          <strong>uid</strong>: your unique id of player
+        </li>
+        <li>
+          <strong>secret</strong>: your secret key of player
+        </li>
+        <li>
+          <strong>enemy_uid</strong>: enemy unique id of player
+        </li>
+        <li>
+          <strong>x</strong>: x coordinate
+        </li>
+        <li>
+          <strong>y</strong>: y coordinate
+        </li>
+      </ul>
+    </p>
+    <p>Returns JSON object with keys:</p>
+    <p>
+      <ul>
+        <li>
+          <strong>status</strong>: status of request<br/>
+        </li>
+        <li>
+          <strong>result</strong>: result of your shot<br/>
+        </li>
+      </ul>
+    </p>
+    <p>Example:</p>
+    <pre><code class="http">GET /shoot/uid-cfe74ffc/usec-9725b649/uid-9dc3bfc2/1/4 HTTP/1.1
+Host: 127.0.0.1:9999
+Content-Length: 55
+Content-Type: application/json
+
+{"status": "success", "result": "miss"}</code>
+    </pre>
+
+    <p>Possible results:</p>
+    <p>
+      <ul>
+        <li>
+          <strong>miss</strong>: you miss
+        </li>
+        <li>
+          <strong>hit</strong>: you torpedoed the ship
+        </li>
+        <li>
+          <strong>touchdown</strong>: you destroyed the ship, now captain and rats are trying to save their lives
+        </li>
+        <li>
+          <strong>win</strong>: you won the battle, congratulations!
+        </li>
+      </ul>
+    </p>
+
+    <h2>Error responses</h2>
+    <p>Response with error will look like below:</p>
+    <pre><code class="http">GET /shoot/uid-cfe74ffc/usec-9725b649/uid-9dc3bfc2/1/4 HTTP/1.1
+Host: 127.0.0.1:9999
+Content-Length: 133
+Content-Type: application/json
+
+{"status": "fail", "error": {"message": "It's not your turn to shoot, wait until your opponent shoots and shoot again", "code": 301}}</code>
+    </pre>
+
+    <h3>Error codes</h3>
+    <small>
+      <ul>
+      {% for code, message in errorcodes %}
+        <li><strong>{{ code }}</strong>: {{ message }}</li>
+      {% else %}
+        <li>--No error codes defined--</li>
+      {% endfor %}
+      </ul>
+    </small>
+  </div>
+{% endblock %}

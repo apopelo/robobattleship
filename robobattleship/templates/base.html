@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}RoboBattleship Server{% endblock %}</title>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="/static/css/main.css" />
+  <link rel="stylesheet" href="/static/css/highlight.js/tomorrow-night.css" />
+
+  <script src="/static/js/jquery-1.8.2.min.js"></script>
+  <script src="/static/js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  {% block head %}
+  {% endblock %}
+
+</head>
+<body>
+  <div class="main-wrapper">
+    {% block content %}
+    {% endblock %}
+    <div class="clear">&nbsp;</div>
+    <div class="footer">2013 RoboBattleship Server</div>
+  </div>
+</body>
+</html>

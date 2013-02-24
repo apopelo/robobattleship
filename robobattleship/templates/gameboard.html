@@ -1,0 +1,51 @@
+{% macro gameboard(player) %}
+  <table class="gameboard" cellspacing="0">
+    <tr>
+      <td>&nbsp;</td>
+      {% for col in player.ships %}
+      <td>{{ loop.index-1 }}</td>
+      {% endfor %}
+    </tr>
+    {% for row in player.ships %}
+    <tr>
+      <td>{{ loop.index-1 }}</td>
+      {% for col in row %}
+        {% if col == '0' %}
+          {% set class = "sea" %}
+        {% elif col == '1' %}
+          {# If battle is active - hide all ships #}
+          {% if not battle.is_active() %}
+            {% set class = "ship" %}
+          {% else %}
+            {% set class = "sea" %}
+            {% set col = '0' %}
+          {% endif %}
+        {% elif col == '•' %}
+          {% set class = "seahit" %}
+        {% elif col == 'x' %}
+          {% set class = "shiphit" %}
+        {% else %}
+          {% set class = "" %}
+        {% endif %}
+
+        <td class="{{ class }}">{{ col }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+{% endmacro %}
+
+{% macro player_with_gameboard(battle, player) %}
+<div class="column center">
+  <h2>
+    {{ player.name }}
+    {% if battle.winner == player %}&mdash; WINNER{% endif %}
+    {% if battle.looser == player %}&mdash; LOOSER{% endif %}
+  </h2>
+  {{ gameboard(player) }}
+</div>
+{% endmacro %}
+
+{{ player_with_gameboard(battle, battle.player1) }}
+
+{{ player_with_gameboard(battle, battle.player2) }}

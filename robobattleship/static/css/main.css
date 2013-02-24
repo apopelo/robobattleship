@@ -1,0 +1,92 @@
+/* body
+--------------------------------------------------*/
+body {
+  background: #bbb url("/static/images/bg.png");
+  padding: 20px 0;
+  font-family: 'PT Sans', 'Trebuchet MS', Arial, sans-serif;
+}
+h1 small {
+  font-size: 0.5em;
+}
+.main-wrapper {
+  background: #fff;
+  margin: 0 auto;
+  padding: 20px 40px;
+  width: 1000px;
+  text-align: left;
+  border-radius: 3px;
+  box-shadow: 1px 1px 3px #333;
+}
+.footer {
+  padding-top: 1em;
+  font-size: 10px;
+  text-align: center;
+  color: #777;
+}
+
+
+/* helpers
+--------------------------------------------------*/
+.column {
+  float: left;
+  width: 500px;
+}
+.column.wide {
+  width: 700px;
+}
+.column.small {
+  width: 300px;
+}
+.center {
+  text-align: center;
+}
+.clear {
+  clear: both;
+}
+
+
+/* game board
+--------------------------------------------------*/
+table.gameboard {
+  margin: 0 auto;
+  box-shadow: 0px 0px 3px #999;
+}
+
+table.gameboard td {
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+}
+
+table.gameboard td.sea {
+  background: #eee;
+  color: #eee;
+}
+
+table.gameboard td.seahit {
+  background: #eee;
+  color: #222;
+}
+
+table.gameboard td.ship {
+  border-color: #999;
+  background: #aaa;
+  color: #aaa;
+}
+
+table.gameboard td.shiphit {
+  border-color: #820121;
+  background: #b5012e;
+  font-family: Tahoma;
+  font-size: 13px;
+  color: #eee;
+}
+
+
+/* REST API docs styling
+--------------------------------------------------*/
+pre code {
+  word-wrap: break-word;
+}

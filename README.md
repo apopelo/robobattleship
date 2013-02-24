@@ -1,4 +1,0 @@
-robobattleship
-==============
-
-RoboBattleship Server
