@@ -1,5 +1,8 @@
 *.pyc
 
+robobattleship/dumps/*.py
+robobattleship/logs/*.log
+
 .hg/
 .hgignore
 

@@ -4,9 +4,13 @@ RoboBattleship game server
 A simple Battleship game server which provides a REST API for players to
 register, connect and fight with other players.
 
+http://robobattleship.com
+
 
 Starting the server
 -------------------
+
+You need to have libevent and python-dev installed in your system.
 
 Create virtualenv::
 
