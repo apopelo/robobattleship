@@ -5,17 +5,14 @@
   <p>Welcome to RoboBattleship Server &mdash; a simple game server for classic Battleship board game with REST API which allows you to code your own bot players and fight with other bots online.</p>
 
   <div class="column small">
-    {#
-    <h2>Usefull pages</h2>
-    <ul>
-      <li><a href="/players/">Registered players list</a></li>
-    </ul>
-    #}
+    {% macro player_name(player) %}
+      {{ player.name|truncate(14, True) }}
+    {% endmacro %}
 
-    <h2>Registered players</h2>
+    <h2>Registered players <small>(<a href="/players/">All</a>)</small></h2>
     <ul>
-    {% for player in players %}
-      <li>{{ player.name }} ({{ player.uid }})</li>
+    {% for player in players[:25] %}
+      <li>{{ player_name(player) }} ({{ player.uid }})</li>
     {% else %}
       <li>--Nobody registered yet--</li>
     {% endfor %}
@@ -24,7 +21,7 @@
     <h2>Active battles</h2>
     <ul>
     {% for battle in battles %}
-      <li><a href="/battle/{{ battle.bid }}">{{ battle.player1.name }} VS {{ battle.player2.name }}</a></li>
+      <li><a href="/battle/{{ battle.bid }}">{{ player_name(battle.player1) }} VS {{ player_name(battle.player2) }}</a></li>
     {% else %}
       <li>--No active battles--</li>
     {% endfor %}
@@ -32,8 +29,8 @@
 
     <h2>Past battles</h2>
     <ul>
-    {% for battle in archived_battles %}
-      <li><a href="/battle/{{ battle.bid }}">{{ battle.player1.name }} VS {{ battle.player2.name }}</a></li>
+    {% for battle in archived_battles[:50] %}
+      <li><a href="/battle/{{ battle.bid }}">{{ player_name(battle.player1) }} VS {{ player_name(battle.player2) }}</a></li>
     {% else %}
       <li>--No past battles--</li>
     {% endfor %}

@@ -8,6 +8,10 @@ body {
 h1 small {
   font-size: 0.5em;
 }
+
+h2 small {
+  font-size: 0.6em;
+}
 .main-wrapper {
   background: #fff;
   margin: 0 auto;
@@ -89,4 +93,5 @@ table.gameboard td.shiphit {
 --------------------------------------------------*/
 pre code {
   word-wrap: break-word;
+  overflow-x: scroll;
 }
