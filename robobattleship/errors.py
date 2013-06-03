@@ -45,6 +45,8 @@ ERRORS = {
     211: "Length of ships string must be 100 characters exactly, you supplied "
          "{characters} characters",
     212: "Ships string must contain only '0' and '1' characters",
+    213: "Player name is too long, maximum length is {maxlength} characters",
+    214: "Player name is too short, minimum length is {minlength} characters",
 
     # Battle errors
     301: "It's not your turn to shoot, wait until your opponent shoots and "

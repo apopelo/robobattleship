@@ -46,6 +46,10 @@ class Server(object):
         """
         if not name:
             raise ValidationException(202)
+        if len(name) > 50:
+            raise ValidationException(213, maxlength=50)
+        if len(name) < 2:
+            raise ValidationException(214, minlength=2)
         if self.is_player_registered(name=name):
             raise ValidationException(203, name=name)
 
