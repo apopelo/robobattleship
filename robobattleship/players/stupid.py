@@ -96,10 +96,9 @@ class StupidBot(Bot):
                 continue
 
             for opponent in self.opponents:
-                result = self.shoot(opponent, random.randrange(10),
-                                              random.randrange(10))
-                if result == 304 or result == 'win':
-                    self.opponents.remove(opponent)
+                self.shoot(opponent, random.randrange(10),
+                                     random.randrange(10))
+
             time.sleep(0.25)
 
     def add_opponent(self, uid):
