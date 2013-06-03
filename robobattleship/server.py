@@ -207,8 +207,8 @@ class Server(object):
         Service method which dumps surrent state of the server with players,
         battles and stats into a file
         """
-        dumpfilename = filename or "server-dump-{date}.py" \
-            .format(date=datetime.now().strftime("%Y.%m.%d-%H.%M"))
+        dumpfilename = filename or "server_dump_{date}.py" \
+            .format(date=datetime.now().strftime("%Y_%m_%d_%H_%M"))
         with open(os.path.join(DUMPS_ROOT, dumpfilename), "w") as dumpfile:
             dumpfile.write(repr(self))
 
@@ -220,8 +220,18 @@ class Server(object):
             .format(players=self.total_players(), battles=self.total_battles())
 
     def __repr__(self):
-        return "Server(players={players},\nships={ships},\nbattles={battles},\n" \
-            "archived_battles={archived_battles})" \
-            .format(players=repr(self.players), ships=repr(self.ships),
+        return (
+            "from robobattleship.server import Server\n"
+            "from robobattleship.player import Player, PlayerWithShips\n"
+            "from robobattleship.battle import Battle\n\n"
+
+            "server = Server("
+                "players={players},\n"
+                "ships={ships},\n"
+                "battles={battles},\n"
+                "archived_battles={archived_battles})"
+            .format(players=repr(self.players),
+                ships=repr(self.ships),
                 battles=repr(self.battles),
                 archived_battles=repr(self.archived_battles))
+        )

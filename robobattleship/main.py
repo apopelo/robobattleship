@@ -214,12 +214,18 @@ def dumpstate(filename=None):
 # Create an instance of the server
 SERVER = Server()
 
+# Restore server state from a dumpfile
+#from robobattleship.dumps.latest import server
+#SERVER = server
+
 # Create a thread with stupid bot
-BOT_STUPID1 = StupidBot(name="Garry (bot)", uid="uid-63aaf540")
+BOT_STUPID1 = StupidBot(name="Garry (bot)", uid="uid-63aaf540",
+                        secret="usec-d821af30")
 BOT_STUPID1.start()
 
 # Create a thread with stupid bot
-BOT_STUPID2 = StupidBot(name="Barry (bot)", uid="uid-566f73bf")
+BOT_STUPID2 = StupidBot(name="Barry (bot)", uid="uid-566f73bf",
+                        secret="usec-3f8718cb")
 BOT_STUPID2.start()
 
 # Run the web server
