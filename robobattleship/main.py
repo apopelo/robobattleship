@@ -11,7 +11,7 @@ import sys
 
 from gevent import monkey; monkey.patch_all()
 from bottle import route, run, response, hook, static_file, TEMPLATE_PATH
-from bottle import jinja2_template as template
+from bottle import Jinja2Template, jinja2_template as template
 
 # XXX: think about this line
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
@@ -25,8 +25,6 @@ from robobattleship.players.stupid import StupidBot
 
 LOG = robobattleship.log.getLogger("robobattleship.main")
 
-# Configure path to templates
-TEMPLATE_PATH.append(TEMPLATES_ROOT)
 
 # -----
 # Hooks
@@ -71,7 +69,6 @@ def about():
     except:
         LOG.exception("Failed to show about page")
         return JsonResponse.error(101)
-
 
 @route('/players/')
 def players():
@@ -210,6 +207,12 @@ def dumpstate(filename=None):
         return JsonResponse.error(101)
     return JsonResponse.success()
 
+
+# Configure path to templates
+TEMPLATE_PATH.append(TEMPLATES_ROOT)
+
+# Enable autoescaping in templates
+Jinja2Template.settings['autoescape'] = True
 
 # Create an instance of the server
 SERVER = Server()
