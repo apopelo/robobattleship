@@ -23,7 +23,7 @@ Install requirements into virtualenv::
 
 Run the server::
 
-    $ python robobattleship/main.py
+    $ python robobattleship
 
 
 Authors
